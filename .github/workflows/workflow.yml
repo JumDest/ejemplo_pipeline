@@ -4,4 +4,5 @@ jobs:
     hello_world:
         runs-on: ubuntu-latest
         steps:
-            - run: python3 main.py
+            - run: ls
+            - run: pwd
