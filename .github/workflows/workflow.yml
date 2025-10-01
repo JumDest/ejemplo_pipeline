@@ -8,15 +8,14 @@ jobs:
             - name: Clonar el repositorio
               uses: actions/checkout@v3
 
-            - name: crear clave ssh
+            - name: creaar clave ssh
               env:
-                ssh_key: $ {{secrets.SSH_KEY}}
-                
+                ssh_key: ${{secrets.SSH_KEY}}
               run:
                 echo "$ssh_key" > key.pem
                 chmod 600 key.pem
 
-            - name: ssh  connection 
+            - name: ssh connection 
               uses: appleboy/ssh-action@v1
               with:
                 host: ${{secrets.HOST}}
@@ -24,3 +23,8 @@ jobs:
                 key: ${{secrets.SSH_KEY}}
                 port: 22
                 script: whoami
+
+
+            - run: ls -ls
+
+            - run: cat key.pem
