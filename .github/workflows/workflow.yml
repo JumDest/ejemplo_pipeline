@@ -1,4 +1,4 @@
-name : hello world
+name : SSH
 on : [workflow_dispatch]
 jobs:
     hello_world:
