@@ -19,4 +19,6 @@ jobs:
           
       - run: pip install pytest unittest
 
+      - run: pip install -r requirements.txt
+
       - run: python main_test.py
