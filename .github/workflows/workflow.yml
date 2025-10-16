@@ -1,30 +1,24 @@
-name : SSH
-on : [workflow_dispatch]
+name: hello_world
+
+on:
+  push:
+    branches: [practica]
+
 jobs:
-    hello_world:
-        runs-on: ubuntu-latest
-        steps:
+  hello_world:
+    runs-on: ubuntu-latest
 
-            - name: Clonar el repositorio
-              uses: actions/checkout@v3
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
 
-            - name: creaar clave ssh
-              env:
-                ssh_key: ${{secrets.SSH_KEY}}
-              run:
-                echo "$ssh_key" > key.pem
-                chmod 600 key.pem
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
-            - name: ssh connection 
-              uses: appleboy/ssh-action@v1
-              with:
-                host: ${{secrets.HOST}}
-                username: ${{secrets.USER}}
-                key: ${{secrets.SSH_KEY}}
-                port: 22
-                script: whoami
+      - name: Instalar dependencias
+        run: pip install pytest unittest
 
-
-            - run: ls -ls
-
-            - run: cat key.pem
+      - name: Ejecutar pruebas
+        run: pytest
