@@ -1,5 +1,4 @@
 name: hello_world
-
 on:
   push:
     branches: [practica]
@@ -12,13 +11,10 @@ jobs:
       - name: Clonar el repositorio
         uses: actions/checkout@v3
 
-      - name: Configurar Python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
           
-      - run: pip install pytest unittest
-
       - run: pip install -r requirements.txt
 
       - run: python main_test.py
