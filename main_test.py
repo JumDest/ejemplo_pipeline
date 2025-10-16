@@ -1,6 +1,6 @@
-from main import get_weather
-from unittest
-from unittest.mock import patch
+# from main import get_weather
+import unittest
+# from unittest.mock import patch
 
 
 # class Test(unittest, TestCase):
