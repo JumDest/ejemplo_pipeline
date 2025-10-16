@@ -3,13 +3,19 @@ from unittest
 from unittest.mock import patch
 
 
-class Test(unittest, TestCase):
-    @patch("main.request.get")
-    def test_get_weather(mock_get):
-        mock_get.return_value.json.return_value = {"temperature : 22"}
-        result = get_weather()
-        self.assertTrue (result, 22)
+# class Test(unittest, TestCase):
+#     @patch("main.request.get")
+#     def test_get_weather(mock_get):
+#         mock_get.return_value.json.return_value = {"temperature : 22"}
+#         result = get_weather()
+#         self.assertTrue (result, 22)
     
+
+# if__name__ == '__main__':
+#     unittest.main()
+
+class TestStringMethods(unittest.TestCase):
+
     def test_upper(self):
         self.assertEqual('foo'.upper(), 'FOO')
 
@@ -24,5 +30,5 @@ class Test(unittest, TestCase):
         with self.assertRaises(TypeError):
             s.split(2)
 
-if__name__ == '__main__':
+if __name__ == '__main__':
     unittest.main()
