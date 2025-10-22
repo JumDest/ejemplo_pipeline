@@ -9,7 +9,7 @@ class FlaskApiTestCase(unittest.TestCase):
 
     def test_suma(self):
         response = self.app.get('/suma?a=5&b=10')
-        data = json.loads(response.get_data)
+        data = json.loads(response.get_data())
         self.assertEqual(data['result'], 15)
 
     def test_multiplicar(self):
