@@ -1,30 +1,39 @@
-name : SSH
-on : [workflow_dispatch]
+name : build image
+
+on:
+  push:
+    branches: [ aws ]
+
 jobs:
-    hello_world:
-        runs-on: ubuntu-latest
-        steps:
 
-            - name: Clonar el repositorio
-              uses: actions/checkout@v3
+  build:
+    runs-on: ubuntu-latest
 
-            - name: creaar clave ssh
-              env:
-                ssh_key: ${{secrets.SSH_KEY}}
-              run:
-                echo "$ssh_key" > key.pem
-                chmod 600 key.pem
+    steps:
+      - name: checkout
+        uses: actions/checkout@v5
 
-            - name: ssh connection 
-              uses: appleboy/ssh-action@v1
-              with:
-                host: ${{secrets.HOST}}
-                username: ${{secrets.USER}}
-                key: ${{secrets.SSH_KEY}}
-                port: 22
-                script: whoami
+      - name: configurar python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
 
+      - name: instalar dependencias
+        run: pip install flask
 
-            - run: ls -ls
+      - name: ejecutar las pruebas
+        run: python test.py
 
-            - run: cat key.pem
+      - name: login a GitHub Packages
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: construir y publicar la imagen
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/python_app:latest
